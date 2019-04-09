@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: artifactory
-        image: cicdpipeline/artifactory:8.0
+        image: djrohith09/geeta-arti
         ports:
         - containerPort: 8081
           protocol: TCP
