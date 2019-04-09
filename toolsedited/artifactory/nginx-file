@@ -1,0 +1,2 @@
+FROM cicdpipeline/nginx:base
+RUN sed -i s/SIP/nodeip/g /etc/nginx/conf.d/default.conf

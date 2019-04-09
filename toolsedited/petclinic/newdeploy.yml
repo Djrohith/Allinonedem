@@ -1,0 +1,29 @@
+---
+- hosts: master
+  gather_facts: no
+  tasks:
+  - name: copy config for service new
+    template: 
+      src: "{{ playbook_dir }}/newpetclinic-rs.yml"
+      dest: /home/admin/
+  - name: copy config for service new
+    template:
+      src: "{{ playbook_dir }}/newpetclinic-service.yml"
+      dest: /home/admin/
+
+  - name: clear any host unrechable error messages.
+    meta: clear_host_errors
+      
+ 
+  - name: test debug
+    shell: echo "hi test"
+    ignore_errors: True
+    
+  - name: create deployement for service new
+    shell: kubectl create -f /home/admin/newpetclinic-rs.yml
+    ignore_errors: True
+
+
+  - name: expose deployment for service new
+    shell: kubectl create -f /home/admin/newpetclinic-service.yml
+    ignore_errors: True

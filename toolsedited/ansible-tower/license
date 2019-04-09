@@ -1,0 +1,21 @@
+{
+
+    "company_name": "make-in", 
+
+    "contact_email": "ransunak282@gmail.com", 
+
+    "contact_name": "Naveen Kumar", 
+
+    "hostname": "3635675d4ee44034b9c91f3a5c4b951e", 
+
+    "instance_count": 10, 
+
+    "license_date": 2135333811, 
+
+    "license_key": "c6fbf73b1729439286f019b147277086835b6f8191b08fa0efd9f25f0d26a39f", 
+
+    "license_type": "basic", 
+
+    "subscription_name": "Ansible Tower by Red Hat, Self-Support (10 Managed Nodes)"
+
+}

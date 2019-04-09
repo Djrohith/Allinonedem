@@ -1,0 +1,17 @@
+{
+  "key" : "nginx",
+  "webServerType" : "NGINX",
+  "artifactoryAppContext" : "artifactory",
+  "publicAppContext" : "artifactory",
+  "serverName" : "172.21.8.119",
+  "serverNameExpression" : "172.21.8.119",
+  "artifactoryServerName" : "localhost",
+  "artifactoryPort" : 8081,
+  "sslCertificate" : "/etc/nginx.cert",
+  "sslKey" : "/etc/nginx.key",
+  "dockerReverseProxyMethod" : "PORTPERREPO",
+  "useHttps" : true,
+  "useHttp" : true,
+  "sslPort" : 443,
+  "httpPort" : 80
+}

@@ -1,0 +1,24 @@
+--- 
+- hosts: node
+  tasks:
+  - name: get lb ip 
+    shell: kubectl get svc | grep nginx | awk '{print $4}'
+    delegate_to: 127.0.0.1
+    register: lbip
+
+  - debug:
+      msg: "{{ lbip }}"
+
+  - name: create daemon.json
+    shell: |
+       cat >/etc/docker/daemon.json <<EOL
+         {
+            "insecure-registries" : ["{{ lbip.stdout }}:8088"]
+         }
+       EOL
+    become: true
+
+  - name: docker restart
+    shell: service docker restart
+    become: true
+    

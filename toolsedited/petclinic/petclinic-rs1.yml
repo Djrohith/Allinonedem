@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: ReplicaSet
+metadata:
+  name: petclinic1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pet
+  template:
+    metadata:
+      labels:
+        app: pet
+    spec:
+     securityContext:
+       fsGroup: 1
+     containers:
+     - name: petclinic1
+       image: {{ REGISTRY }}/petclinictest:latest
+       imagePullPolicy: Always
+       ports:
+       - containerPort: 8080
+         protocol: TCP

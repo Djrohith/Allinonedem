@@ -1,0 +1,62 @@
+---
+- hosts: master
+  gather_facts: no
+  tasks:
+  - name: copy config for service1
+    template: 
+      src: "{{ playbook_dir }}/petclinic-rs1.yml"
+      dest: /home/admin/
+  - name: copy config for service2
+    template:
+      src: "{{ playbook_dir }}/petclinic-rs2.yml"
+      dest: /home/admin/
+    
+  - name: copy config for service1
+    template:
+      src: "{{ playbook_dir }}/petclinic-service1.yml"
+      dest: /home/admin/
+
+  - name: copy config for service2
+    template:
+      src: "{{ playbook_dir }}/petclinic-service2.yml"
+      dest: /home/admin/
+  
+  - name: clear any host unrechable error messages.
+    meta: clear_host_errors
+      
+  - name: check if service exists
+    shell: kubectl get svc | grep petclinic
+    register: serviceexits
+    ignore_errors: True
+    
+  - name: delete deployment for service1 if present
+    shell: kubectl delete -f /home/admin/petclinic-rs1.yml
+    ignore_errors: True
+
+  - name: delete deployment for serice2 if present
+    shell: kubectl delete -f /home/admin/petclinic-rs2.yml
+    ignore_errors: True
+    
+  - name: test debug
+    shell: echo "hi test"
+    ignore_errors: True
+    
+  - name: create deployement for service1
+    shell: kubectl create -f /home/admin/petclinic-rs1.yml
+    ignore_errors: True
+
+  - name: create deployement for service2
+    shell: kubectl create -f /home/admin/petclinic-rs2.yml
+    ignore_errors: True
+    
+
+  - name: expose deployment for service1
+    shell: kubectl create -f /home/admin/petclinic-service1.yml
+    when: serviceexits.stdout == ''
+    ignore_errors: True
+
+  - name: expose deployment for service1
+    shell: kubectl create -f /home/admin/petclinic-service2.yml
+    when: serviceexits.stdout == ''
+    ignore_errors: True
+
