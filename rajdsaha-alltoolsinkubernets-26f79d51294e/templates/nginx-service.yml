@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  type: LoadBalancer
+  ports:
+    - name: ngin
+      port: 443
+      targetPort: 443
+    - name: dlogin
+      port: 8088
+      targetPort: 8088
+  selector:
+    app: nginx
+

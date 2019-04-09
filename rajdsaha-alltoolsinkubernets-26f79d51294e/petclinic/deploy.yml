@@ -1,0 +1,29 @@
+---
+- hosts: master
+  tasks:
+  - name: copy config
+    template: 
+      src: "{{ playbook_dir }}/petclinic-rs.yml"
+      dest: /home/admin/
+      
+  - name: copy config
+    template:
+      src: "{{ playbook_dir }}/petclinic-service.yml"
+      dest: /home/admin/
+      
+  - name: check if service exists
+    shell: kubectl get svc | grep petclinic
+    register: serviceexits
+    ignore_errors: True
+    
+  - name: delete deployment if present
+    shell: kubectl delete -f /home/admin/petclinic-rs.yml
+    ignore_errors: True 
+    
+  - name: create deployement
+    shell: kubectl create -f /home/admin/petclinic-rs.yml
+
+  - name: expose deployment
+    shell: kubectl create -f /home/admin/petclinic-service.yml
+    when: serviceexits.stdout == ''
+

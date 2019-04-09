@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: artifactory
+spec:
+  type: LoadBalancer
+  ports:
+    - name: art
+      port: 8081
+      targetPort: 8081
+      nodePort: 31313
+#    - name: ngin
+#      port: 443
+#      targetPort: 443
+#    - name: dlogin
+#      port: 8088
+#      targetPort: 8088
+#      nodePort: 31314
+  selector:
+    app: artifactory
+

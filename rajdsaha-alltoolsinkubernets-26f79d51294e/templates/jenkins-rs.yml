@@ -1,0 +1,41 @@
+apiVersion: apps/v1beta2
+kind: ReplicaSet
+metadata:
+  name: jenkins
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kubia
+  template:
+    metadata:
+      labels:
+        app: kubia
+    spec:
+      securityContext:
+        fsGroup: 1000
+      containers:
+      - name: jenkins
+        image: cicdpipeline/jenkins:3.0
+        env:
+        - name: nodedns
+          value: "ndns"
+        lifecycle:
+         postStart:
+          exec: 
+           command: ["/bin/sh", "-c", "tower-cli config host nip:31315"]
+        volumeMounts:
+        - name: dockermount
+          mountPath: /var/run/docker.sock
+        securityContext:
+          allowPrivilegeEscalation: false
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        - containerPort: 50000
+          protocol: TCP
+      volumes:
+       - name: dockermount
+         hostPath:
+            path: /var/run/docker.sock
+

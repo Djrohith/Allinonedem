@@ -1,0 +1,30 @@
+apiVersion: apps/v1beta2
+kind: ReplicaSet
+metadata:
+  name: artifactory
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: artifactory
+  template:
+    metadata:
+      labels:
+        app: artifactory
+    spec:
+      containers:
+      - name: artifactory
+        image: cicdpipeline/artifactory:8.0
+        ports:
+        - containerPort: 8081
+          protocol: TCP
+#      - name: nginx
+#        image: cicdpipeline/nginx:1.0
+#        ports:
+#        - containerPort: 80
+#          protocol: TCP
+#        - containerPort: 443
+#          protocol: TCP
+#        - containerPort: 8088
+#          protocol: TCP
+
